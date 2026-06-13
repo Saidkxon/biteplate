@@ -1,0 +1,26 @@
+@startuml
+title Strategy Pattern - Pricing Engine
+
+interface PricingStrategy {
+  + calculateTotal(order: CustomerOrder): double
+  + getName(): String
+}
+class StandardPricing
+class HappyHourPricing
+class LoyaltyCardPricing
+class GroupDiscountPricing
+class PricingStrategyFactory {
+  + create(value: String): PricingStrategy
+}
+class BillingService
+class Bill
+
+PricingStrategy <|.. StandardPricing
+PricingStrategy <|.. HappyHourPricing
+PricingStrategy <|.. LoyaltyCardPricing
+PricingStrategy <|.. GroupDiscountPricing
+PricingStrategyFactory ..> PricingStrategy
+BillingService --> PricingStrategyFactory
+BillingService --> Bill
+Bill --> PricingStrategy
+@enduml

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BitePlate Cashier Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-required-role="CASHIER">
+<div class="orb orb-a"></div><div class="orb orb-b"></div>
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand-row"><div class="brand-icon">BP</div><div><h1>BitePlate</h1><p id="userRole">CASHIER</p></div></div>
+        <nav>
+            <a href="/manager-dashboard.html">Manager</a>
+            <a href="/waiter-dashboard.html">Waiter</a>
+            <a href="/chef-dashboard.html">Head Chef</a>
+            <a href="/cashier-dashboard.html">Cashier</a>
+        </nav>
+        <button onclick="logout()">Logout</button>
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <div><span class="eyebrow">Role-specific dashboard</span><h2>Cashier Dashboard</h2><p id="welcomeText" class="muted"></p></div>
+            <button class="primary-btn" onclick="refreshAll()">Refresh</button>
+        </header>
+        <section id="dashboard" class="stats-grid">
+            <div class="stat-card"><span>Tables</span><strong id="totalTables">0</strong></div>
+            <div class="stat-card"><span>Reserved</span><strong id="reservedTables">0</strong></div>
+            <div class="stat-card"><span>Occupied</span><strong id="occupiedTables">0</strong></div>
+            <div class="stat-card"><span>Active Orders</span><strong id="activeOrders">0</strong></div>
+            <div class="stat-card"><span>Reservations</span><strong id="reservationsCount">0</strong></div>
+            <div class="stat-card"><span>Notifications</span><strong id="notificationsCount">0</strong></div>
+            <div class="stat-card wide-stat"><span>Revenue</span><strong id="totalRevenue">$0.00</strong></div>
+        </section>
+        <section class="grid-two"><div class="panel" id="billing">
+                <div class="panel-header"><div><span class="eyebrow">Strategy + Facade</span><h3>Billing & POS</h3></div></div>
+                <div class="form-grid">
+                    <input id="billOrderId" value="ORD001" placeholder="Order ID">
+                    <select id="pricingType">
+                        <option value="STANDARD">Standard</option>
+                        <option value="HAPPY_HOUR">Happy Hour -20%</option>
+                        <option value="LOYALTY_CARD">Loyalty Card</option>
+                        <option value="GROUP_DISCOUNT">Group Discount</option>
+                    </select>
+                    <input id="tipAmount" type="number" value="3.00" step="0.01">
+                    <input id="splitCount" type="number" value="2" min="1">
+                </div>
+                <button class="primary-btn" onclick="generateBill()">Generate Itemised Bill</button>
+                <div id="billResult" class="receipt"></div>
+            </div>
+<div class="panel" id="orders">
+                <div class="panel-header"><div><span class="eyebrow">Order Management</span><h3>Orders + Customisation</h3></div></div>
+                <div class="form-grid">
+                    <input id="orderTable" type="number" value="1" placeholder="Table">
+                    <input id="staffId" value="W001" placeholder="Staff ID">
+                    <input id="item1" value="M1" placeholder="Item 1">
+                    <input id="qty1" type="number" value="2" placeholder="Qty 1">
+                    <input id="addon1" placeholder="Add-ons" value="extra cheese">
+                    <input id="sub1" placeholder="Substitution" value="no onions">
+                    <input id="allergy1" placeholder="Allergen notes" value="">
+                    <input id="item2" value="B1" placeholder="Item 2">
+                    <input id="qty2" type="number" value="2" placeholder="Qty 2">
+                </div>
+                <button class="primary-btn" onclick="createOrder()">Create Order</button>
+                <div class="form-grid compact">
+                    <input id="modifyOrderId" placeholder="Order ID for modify" value="ORD001">
+                    <input id="modifyItem" placeholder="New item ID" value="D1">
+                    <input id="modifyQty" type="number" value="1">
+                </div>
+                <button onclick="addItemToOrder()">Add Item Before Preparing</button>
+                <button onclick="removeLastItem()">Remove Last Item</button>
+                <div class="table-wrap">
+                    <table><thead><tr><th>Order</th><th>Table</th><th>Status</th><th>Subtotal</th></tr></thead><tbody id="ordersTable"></tbody></table>
+                </div>
+            </div></section><section class="grid-two"><div class="panel" id="tables">
+                <div class="panel-header"><div><span class="eyebrow">Lifecycle</span><h3>Table Management</h3></div></div>
+                <div id="tableGrid" class="table-grid"></div>
+            </div>
+<div class="panel" id="notifications">
+                <div class="panel-header"><div><span class="eyebrow">Live alerts</span><h3>Notifications</h3></div></div>
+                <div id="notificationList" class="list"></div>
+            </div></section>
+    </main>
+</div>
+<div id="toastList" class="toast-list"></div>
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+@startuml
+title Activity Diagram 2 - Order History Recording and Query
+
+|Waiter|
+start
+:Confirm order;
+
+|System|
+:Store order and audit event;
+
+|Kitchen|
+:Prepare and serve order;
+
+|Cashier|
+:Generate bill;
+
+|System|
+:Calculate final total;
+:Call OrderHistoryLog.getInstance();
+:Append OrderHistoryRecord with timestamp, table, staff, items, total;
+
+|Manager|
+:Open Manager Dashboard;
+:Request report / top item / table orders;
+
+|System|
+:Call Singleton OrderHistoryLog;
+:Use Iterator over OrderHistoryRecord snapshot;
+:Filter by date/table;
+:Aggregate totals and most frequent items;
+
+|Manager|
+:View analytics output;
+stop
+@enduml

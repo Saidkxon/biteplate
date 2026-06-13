@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BitePlate Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+
+<section class="auth-screen">
+    <div class="auth-card register-card">
+        <div class="brand-row">
+            <div class="brand-icon">BP</div>
+            <div>
+                <h1>BitePlate</h1>
+                <p>Create staff account</p>
+            </div>
+        </div>
+
+        <h2>Staff Registration</h2>
+        <p class="muted">This creates a staff login record in PostgreSQL.</p>
+
+        <div class="auth-grid">
+            <label>Staff ID
+                <input id="regStaffId" placeholder="Example: W002">
+            </label>
+
+            <label>Full Name
+                <input id="regName" placeholder="Example: Ahmad Waiter">
+            </label>
+
+            <label>Username
+                <input id="regUsername" placeholder="Example: ahmad">
+            </label>
+
+            <label>Password
+                <input id="regPassword" type="password" placeholder="Create password">
+            </label>
+
+            <label>Role
+                <select id="regRole">
+                    <option value="WAITER">WAITER</option>
+                    <option value="HEAD_CHEF">HEAD_CHEF</option>
+                    <option value="CASHIER">CASHIER</option>
+                    <option value="MANAGER">MANAGER</option>
+                </select>
+            </label>
+        </div>
+
+        <button class="primary-btn full" onclick="registerStaff()">Register Account</button>
+
+        <div class="auth-links">
+            <a href="/login.html">Back to login</a>
+        </div>
+    </div>
+</section>
+
+<div id="toastList" class="toast-list"></div>
+<script src="/js/auth.js"></script>
+</body>
+</html>

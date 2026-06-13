@@ -1,0 +1,37 @@
+@startuml
+title Sequence Diagram - Place Order to Billing
+
+actor Waiter
+actor HeadChef
+actor Cashier
+participant "OrderController" as OC
+participant "OrderService" as OS
+participant "KitchenQueue" as KQ
+participant "PrepareOrderCommand" as PC
+participant "BillingController" as BC
+participant "BillingService" as BS
+participant "PricingStrategy" as PS
+participant "OrderHistoryLog <<Singleton>>" as OHL
+database "PostgreSQL" as DB
+
+Waiter -> OC: POST /api/orders
+OC -> OS: create(request)
+OS -> DB: load table, staff, menu items
+OS -> DB: save CustomerOrder
+OS -> KQ: addCommand(PrepareOrderCommand)
+OS --> OC: OrderResponse
+
+HeadChef -> KQ: processNext()
+KQ -> PC: execute()
+PC -> DB: update order status PREPARING
+
+Cashier -> BC: POST /api/billing/{orderId}
+BC -> BS: bill(orderId, pricingType, tip, split)
+BS -> DB: load CustomerOrder
+BS -> PS: calculateTotal(order)
+PS --> BS: discounted total
+BS -> DB: save BillRecord
+BS -> OHL: getInstance().append(...)
+OHL -> DB: save OrderHistoryRecord
+BS --> BC: BillResponse
+@enduml

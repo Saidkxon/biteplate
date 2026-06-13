@@ -1,0 +1,63 @@
+@startuml
+title Activity Diagram 1 - Full Order Lifecycle
+
+|Customer|
+start
+:Booking a reservation;
+
+|Waiter|
+:Check available table;
+if (Reservation exists?) then (yes)
+  :Confirm reservation;
+else (no)
+  :Assign free table;
+endif
+
+|System|
+:Set table status to OCCUPIED;
+
+|Waiter|
+:Take order with menu items/customisation;
+:Submit order;
+
+|System|
+:Validate order;
+:Create CustomerOrder;
+:Add PrepareOrderCommand to KitchenQueue;
+:Notify allergy observers if needed;
+
+|Kitchen|
+:View kitchen queue;
+if (Order modified before preparing?) then (yes)
+  |Waiter|
+  :Modify or cancel order;
+  |System|
+  :Update order/audit log;
+endif
+
+|Kitchen|
+:Process command;
+:Set order status PREPARING;
+:Prepare meal;
+:Set order status SERVED;
+
+|Cashier|
+:Generate itemised bill;
+:Select pricing strategy;
+:Add tip and split count;
+
+|System|
+:Calculate discount, tax, split bill;
+:Append record to Singleton OrderHistoryLog;
+:Set table status AWAITING_BILL;
+
+|Customer|
+:Pay bill;
+
+|Waiter|
+:Clear table;
+
+|System|
+:Set table status CLEARED;
+stop
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+title Observer Pattern - Reservation and Allergy Notifications
+
+interface NotificationSubject {
+  + attach(observer): void
+  + detach(observer): void
+  + notifyObservers(eventType, message): void
+}
+interface SystemObserver {
+  + update(eventType, message): void
+}
+class NotificationCenter
+class StaffNotificationObserver
+class ManagerDashboardObserver
+class ReservationService
+class OrderService
+class Notification
+
+NotificationSubject <|.. NotificationCenter
+SystemObserver <|.. StaffNotificationObserver
+SystemObserver <|.. ManagerDashboardObserver
+NotificationCenter o-- "1..*" SystemObserver
+ReservationService --> NotificationCenter : reservation events
+OrderService --> NotificationCenter : allergy events
+StaffNotificationObserver --> Notification
+ManagerDashboardObserver --> Notification
+@enduml

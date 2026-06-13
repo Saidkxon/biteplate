@@ -1,0 +1,118 @@
+@startuml
+title BitePlate Core System Class Diagram
+
+abstract class MenuItem {
+  - id: String
+  - name: String
+  - price: double
+  - category: MenuCategory
+  + display(): String
+}
+class Starter
+class MainCourse
+class Dessert
+class Beverage
+class ComboMeal {
+  - includedItems: List<MenuItem>
+  + addItem(item: MenuItem): void
+}
+MenuItem <|-- Starter
+MenuItem <|-- MainCourse
+MenuItem <|-- Dessert
+MenuItem <|-- Beverage
+MenuItem <|-- ComboMeal
+ComboMeal o-- "0..*" MenuItem : includedItems
+
+abstract class Staff {
+  - staffId: String
+  - username: String
+  - password: String
+  - name: String
+  - role: StaffRole
+  + canAccessBilling(): boolean
+  + canModifyKitchenOrders(): boolean
+}
+class Waiter
+class HeadChef
+class Cashier
+class Manager
+Staff <|-- Waiter
+Staff <|-- HeadChef
+Staff <|-- Cashier
+Staff <|-- Manager
+
+class RestaurantTable {
+  - tableNumber: Integer
+  - capacity: int
+  - status: TableStatus
+  + reserve(): void
+  + seatCustomer(): void
+  + markAwaitingBill(): void
+  + clearTable(): void
+}
+
+class Reservation {
+  - id: Long
+  - customerName: String
+  - phone: String
+  - tableNumber: int
+  - reservationTime: LocalDateTime
+  - status: ReservationStatus
+}
+
+class CustomerOrder {
+  - orderId: String
+  - tableNumber: int
+  - staffId: String
+  - status: OrderStatus
+  - createdAt: LocalDateTime
+  + addItem(item: OrderItem): void
+  + removeLastItem(): void
+  + getSubtotal(): double
+}
+class OrderItem {
+  - quantity: int
+  - addOns: String
+  - substitutions: String
+  - allergenNotes: String
+  + getLineTotal(): double
+}
+CustomerOrder *-- "1..*" OrderItem
+OrderItem --> MenuItem
+
+class Bill {
+  - orderId: String
+  - tableNumber: int
+  - lineItems: List<BillLineItem>
+  + getSubtotal(): double
+  + getFinalTotal(order): double
+}
+class BillLineItem {
+  - description: String
+  - quantity: int
+  - lineTotal: double
+}
+Bill *-- "1..*" BillLineItem
+
+class OrderHistoryLog <<Singleton>> {
+  - instance: OrderHistoryLog
+  - snapshot: List<OrderHistoryRecord>
+  + getInstance(): OrderHistoryLog
+  + append(repository, order, total): OrderHistoryRecord
+  + iterator(): Iterator<OrderHistoryRecord>
+}
+class OrderHistoryRecord {
+  - orderId: String
+  - tableNumber: int
+  - staffId: String
+  - itemSummary: String
+  - total: double
+  - timestamp: LocalDateTime
+}
+OrderHistoryLog o-- "0..*" OrderHistoryRecord
+
+RestaurantTable "1" <-- "0..*" Reservation
+RestaurantTable "1" <-- "0..*" CustomerOrder
+CustomerOrder --> Staff : staffId
+Bill --> CustomerOrder
+@enduml

@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: biteplate-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: biteplate_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Saidkxon_2003
+    ports:
+      - "5432:5432"
+    volumes:
+      - biteplate-postgres-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: biteplate-app
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/biteplate_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Saidkxon_2003
+    ports:
+      - "8080:8080"
+
+volumes:
+  biteplate-postgres-data:

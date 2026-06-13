@@ -1,0 +1,37 @@
+@startuml
+title Precedence Diagram - BitePlate Workflow Dependencies
+
+start
+:Login as staff;
+:Select role dashboard;
+
+fork
+  :Manager monitors dashboard;
+fork again
+  :Waiter manages tables/reservations;
+end fork
+
+:Seat or reserve table;
+:Create order;
+if (Allergy note?) then (yes)
+  :Observer notification sent;
+endif
+:Add command to kitchen queue;
+
+if (Modify before preparation?) then (yes)
+  :Add/remove order item;
+else (no)
+endif
+
+:Kitchen reprioritise if needed;
+:Kitchen process command;
+:Order preparing/served;
+
+:Cashier generate bill;
+:Choose pricing strategy;
+:Apply tax, tip and split bill;
+:Singleton OrderHistoryLog records sale;
+:Audit log updated;
+:Manager reviews report;
+stop
+@enduml

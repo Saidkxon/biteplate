@@ -1,0 +1,29 @@
+@startuml
+title Factory Method Pattern - Menu Item Creation
+
+abstract class MenuItemFactory {
+  + create(id, name, price): MenuItem
+}
+class StarterFactory
+class MainCourseFactory
+class DessertFactory
+class BeverageFactory
+abstract class MenuItem
+class Starter
+class MainCourse
+class Dessert
+class Beverage
+
+MenuItemFactory <|-- StarterFactory
+MenuItemFactory <|-- MainCourseFactory
+MenuItemFactory <|-- DessertFactory
+MenuItemFactory <|-- BeverageFactory
+MenuItem <|-- Starter
+MenuItem <|-- MainCourse
+MenuItem <|-- Dessert
+MenuItem <|-- Beverage
+StarterFactory ..> Starter
+MainCourseFactory ..> MainCourse
+DessertFactory ..> Dessert
+BeverageFactory ..> Beverage
+@enduml

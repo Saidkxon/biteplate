@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BitePlate Customer Reservation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+
+<section class="customer-hero">
+    <div class="customer-card hero-card">
+        <div class="brand-row">
+            <div class="brand-icon">BP</div>
+            <div>
+                <h1>BitePlate</h1>
+                <p>Book your table online</p>
+            </div>
+        </div>
+
+        <h2>Reserve a table</h2>
+        <p class="muted">Your request goes directly to the waiter dashboard. Once confirmed, you can check the confirmation message here.</p>
+
+        <div class="auth-grid">
+            <label>Your name
+                <input id="customerName" value="Customer One">
+            </label>
+
+            <label>Phone number
+                <input id="customerPhone" value="+998901234567">
+            </label>
+
+            <label>Preferred table
+                <input id="customerTable" type="number" value="1">
+            </label>
+
+            <label>Reservation time
+                <input id="customerResTime" type="datetime-local">
+            </label>
+        </div>
+
+        <button class="primary-btn full" onclick="submitCustomerReservation()">Send reservation request</button>
+
+        <div id="customerResult" class="receipt"></div>
+
+        <div class="auth-links">
+            <a href="/login.html">Staff login</a>
+        </div>
+    </div>
+
+    <div class="customer-card">
+        <span class="eyebrow">Check status</span>
+        <h3>Reservation confirmation</h3>
+        <p class="muted">Enter the same phone number to see whether the waiter confirmed your booking.</p>
+
+        <label>Phone number
+            <input id="statusPhone" value="+998901234567">
+        </label>
+
+        <button onclick="checkCustomerStatus()">Check my reservation</button>
+
+        <div id="customerStatusList" class="list"></div>
+    </div>
+</section>
+
+<div id="toastList" class="toast-list"></div>
+<script src="/js/customer.js"></script>
+</body>
+</html>

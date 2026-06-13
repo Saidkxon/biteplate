@@ -1,0 +1,18 @@
+@startuml
+title Decorator Pattern - Meal Customisation
+
+abstract class MenuItem
+abstract class MenuCustomisationDecorator {
+  - baseItem: MenuItem
+  + getBaseItem(): MenuItem
+}
+class AddOnDecorator
+class AllergenFlagDecorator {
+  - allergenNote: String
+}
+
+MenuItem <|-- MenuCustomisationDecorator
+MenuCustomisationDecorator <|-- AddOnDecorator
+MenuCustomisationDecorator <|-- AllergenFlagDecorator
+MenuCustomisationDecorator o-- MenuItem : wraps
+@enduml

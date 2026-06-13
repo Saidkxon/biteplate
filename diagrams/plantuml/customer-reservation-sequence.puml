@@ -1,0 +1,29 @@
+@startuml
+title Customer Self-Reservation and Waiter Confirmation Sequence
+
+actor Customer
+participant "customer-reservation.html" as UI
+participant ReservationController
+participant ReservationService
+database PostgreSQL
+participant "NotificationCenter\n(Observer Subject)" as NotificationCenter
+actor Waiter
+
+Customer -> UI : submit reservation request
+UI -> ReservationController : POST /api/reservations/customer-request
+ReservationController -> ReservationService : createByCustomer(request)
+ReservationService -> PostgreSQL : save REQUESTED reservation
+ReservationService -> NotificationCenter : notify RESERVATION_REQUESTED
+NotificationCenter -> Waiter : show request in dashboard
+
+Waiter -> ReservationController : POST /api/reservations/{id}/confirm
+ReservationController -> ReservationService : confirm(id, staffId)
+ReservationService -> PostgreSQL : update status CONFIRMED
+ReservationService -> NotificationCenter : notify RESERVATION_CONFIRMED
+
+Customer -> UI : check status by phone
+UI -> ReservationController : GET /api/reservations/customer-status
+ReservationController -> PostgreSQL : findByPhoneOrderByReservationTimeDesc
+ReservationController --> UI : confirmed + customer message
+UI --> Customer : "Your table is confirmed and being prepared"
+@enduml

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BitePlate Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+
+<section class="auth-screen">
+    <div class="auth-card">
+        <div class="brand-row">
+            <div class="brand-icon">BP</div>
+            <div>
+                <h1>BitePlate</h1>
+                <p>Smart Restaurant Management System</p>
+            </div>
+        </div>
+
+        <h2>Staff Login</h2>
+        <p class="muted">Login as Manager, Waiter, Head Chef, or Cashier.</p>
+
+        <label>Username
+            <input id="loginUsername" value="manager" autocomplete="username">
+        </label>
+
+        <label>Password
+            <input id="loginPassword" type="password" value="1234" autocomplete="current-password">
+        </label>
+
+        <button class="primary-btn full" onclick="login()">Login</button>
+
+        <div class="auth-links">
+            <a href="/register.html">Create new staff account</a><br><a href="/customer-reservation.html">Customer table reservation</a>
+        </div>
+    </div>
+</section>
+
+<div id="toastList" class="toast-list"></div>
+<script src="/js/auth.js"></script>
+</body>
+</html>

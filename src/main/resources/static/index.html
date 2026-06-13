@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BitePlate Redirect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const user = JSON.parse(localStorage.getItem("bpUser") || "null");
+        const rolePages = {
+            MANAGER: "/manager-dashboard.html",
+            WAITER: "/waiter-dashboard.html",
+            HEAD_CHEF: "/chef-dashboard.html",
+            CASHIER: "/cashier-dashboard.html"
+        };
+        if (!user) {
+            window.location.href = "/login.html";
+        } else {
+            window.location.href = rolePages[user.role] || "/login.html";
+        }
+    </script>
+</head>
+<body></body>
+</html>

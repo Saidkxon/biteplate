@@ -1,0 +1,37 @@
+@startuml
+title Command Pattern - Kitchen Queue
+
+interface KitchenCommand {
+  + execute(): void
+  + undo(): void
+  + getOrderId(): String
+  + getDescription(): String
+}
+class PrepareOrderCommand {
+  - chef: Staff
+  - order: CustomerOrder
+  - previousStatus: OrderStatus
+}
+class CancelOrderCommand {
+  - chef: Staff
+  - order: CustomerOrder
+  - previousStatus: OrderStatus
+}
+class KitchenQueue {
+  - queue: Deque<KitchenCommand>
+  - history: Deque<KitchenCommand>
+  + addCommand(command): void
+  + processNext(): String
+  + undoLast(): String
+  + reprioritise(orderId): String
+}
+class HeadChef
+
+KitchenCommand <|.. PrepareOrderCommand
+KitchenCommand <|.. CancelOrderCommand
+KitchenQueue o-- KitchenCommand : pending/history
+PrepareOrderCommand --> CustomerOrder : receiver state
+CancelOrderCommand --> CustomerOrder : receiver state
+PrepareOrderCommand --> HeadChef : receiver actor
+CancelOrderCommand --> HeadChef : receiver actor
+@enduml
