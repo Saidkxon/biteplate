@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: biteplate_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Saidkxon_2003
+      POSTGRES_PASSWORD: PASSWORD
     ports:
       - "5432:5432"
     volumes:
@@ -20,8 +20,8 @@ services:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/biteplate_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Saidkxon_2003
+      SPRING_DATASOURCE_USERNAME: USERNAME
+      SPRING_DATASOURCE_PASSWORD: PASSWORD
     ports:
       - "8080:8080"
 
